@@ -13,18 +13,18 @@ module.exports.validateUserFields = (name, email, password, role) => {
 };
 
 module.exports.validateFields = async (req, res, next) => {
-  
-    const err = validationResult(req);
+  const err = validationResult(req);
 
-  if (!err.isEmpty) {
-    res.status(400).json(err);
-  }
   const { email } = req.body;
   const toMatchEmail = await userModel.findOne({ email });
+  if (!err.isEmpty()) {
+    res.status(400).json(err);
+  }else if(toMatchEmail){
 
-  if (toMatchEmail) {
+  
     res.status(400).json({ msg: "Email already exists" });
-  }
+  
 
-  next();
+  }else{
+    next();}
 };
