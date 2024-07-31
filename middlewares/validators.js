@@ -19,12 +19,9 @@ module.exports.validateFields = async (req, res, next) => {
   const toMatchEmail = await userModel.findOne({ email });
   if (!err.isEmpty()) {
     res.status(400).json(err);
-  }else if(toMatchEmail){
-
-  
+  } else if (toMatchEmail) {
     res.status(400).json({ msg: "Email already exists" });
-  
-
-  }else{
-    next();}
+  } else {
+    next();
+  }
 };

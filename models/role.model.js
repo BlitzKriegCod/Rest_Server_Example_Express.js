@@ -1,0 +1,1 @@
+const {Shema,model} = require('mongoose')
