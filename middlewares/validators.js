@@ -7,7 +7,7 @@ module.exports.validateUserFields = (name, email, password, role) => {
   const validations = [
     check(name, "Name is required").not().isEmpty(),
     check(email, "Not is a valid syntax for an email address").isEmail(),
-    check(password, "Min length allowed are 6 characters").isLength({ min: 6 }),
+    check(password, "Min length allowed are 6 characters and is required").isLength({ min: 6 }).not().isEmpty(),
     check(role).custom(async (role) => {
       const requiredRole = await Role.findOne({ role });
       if (!requiredRole)

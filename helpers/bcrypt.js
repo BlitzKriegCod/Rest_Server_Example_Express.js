@@ -5,8 +5,9 @@ const salt = bcrypt.genSaltSync()
 
 
 function CryptPassword(password) {
-    const hashpassword =bcrypt.hashSync(password , salt) 
-      return hashpassword
+   
+    const Hash_Password =bcrypt.hashSync(password , salt) 
+      return Hash_Password
         
 }
 module.exports = CryptPassword

@@ -3,6 +3,7 @@ const cors = require('cors')
 const DB =require('../database/config')
 class Server {
     userPath ='/api/users'
+    authPath = '/api/auth'
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
@@ -17,7 +18,7 @@ class Server {
   }
   routes() {
   this.app.use(this.userPath,require('../routes/user.routes'))
- 
+  this.app.use(this.authPath,require('../routes/auth.routes'))
   
   }
   listen() {
