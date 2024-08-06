@@ -12,6 +12,7 @@ const {
   verifyRole,
   paramsNoString
 } = require("../middlewares/validators");
+const {ValidateJWT} = require('../middlewares/validate-jwt')
 const { check } = require("express-validator");
 
 const router = Router();
@@ -20,7 +21,7 @@ router.get("/", getUsers);
 
 router.delete(
   "/:id",
-  [
+  [ValidateJWT,
     check("id", `This Id not is a valid mongo Id`).isMongoId(),
     check("id").custom(verifyIdUser), validateFields
   ],

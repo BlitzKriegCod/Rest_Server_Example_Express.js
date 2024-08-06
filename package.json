@@ -19,6 +19,7 @@
     "express-validator": "^7.1.0",
     "express-validators": "^1.0.4",
     "hbs": "^4.2.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.1"
   }
 }
