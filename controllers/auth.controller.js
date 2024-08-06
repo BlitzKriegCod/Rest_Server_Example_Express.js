@@ -19,6 +19,6 @@ let token;
       res.status(400).json(`Email or password is incorrect`);
     }
   } catch (error) {
-    return res.status(500).json(`Oops,${error} try contacting the admin`);
+     res.status(500).json(`Oops,${error} try contacting the admin`);
   }
 };

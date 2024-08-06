@@ -6,8 +6,7 @@ const { validateUserFields, validateFields } = require('../middlewares/validator
 const {ValidateJWT} = require('../middlewares/validate-jwt')
 
 const router = Router()
-router.post('/login',[
-    check('email','You need send an email address example@gmail.com').isEmail(),
+router.post('/login',[check('email','You need send an email address example@gmail.com').isEmail(),
     check('password','Something is wrong with the password, check this again :)').not().isEmpty(),
     (req, res, next)=>{
         const err = validationResult(req);
