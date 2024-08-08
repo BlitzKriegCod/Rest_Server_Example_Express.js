@@ -1,53 +1,68 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Yulesky Gonzalez, and Bootstrap contributors">
-  <meta name="generator" content="Hugo 0.72.0">
-  <title>Error Access Denied</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: white;
-      color: #212529;
-      text-align: center;
-      padding-top: 50px;
-    }
-    h1 {
-      margin-bottom: 20px;
-      color: #dc3545;
-    }
-    hr {
-      border-top: 1px solid #ced4da;
-      width: 60%;
-      margin: auto;
-    }
-    p {
-      margin-bottom: 30px;
-    }
-    a {
-      color: #007bff; /* Blue */
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    img {
-      width:200px;
-      height: 150px;
-      background-color:white;
-      mix-blend-mode: multiply;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Signin</title>
+
+    <meta name="google-signin-client_id" content="1023916028923-mnn067lcjn3itrr0lo8oj1s07kddgrcj.apps.googleusercontent.com">
+
 </head>
 <body>
-  <h1>Access Denied</h1>
-  <hr>
-  <div class="error-gif">
-    <img src="https://cdn.dribbble.com/users/2469324/screenshots/6538803/comp_3.gif" alt="Decorative Error GIF">
-  </div>
-  <p>You're lost, go to <a href="/api" style="text-decoration: none;">home</a>.</p>
+
+    <h1>Google Signin</h1>
+    <hr>
+
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <a href="#" onclick="signOut();">Sign out</a>
+
+    <script>
+
+        console.log(window.location.hostname.includes('localhost'))
+
+
+        <!-- ========== Important change the url ========== -->
+
+
+
+        var url = ( window.location.hostname.includes('localhost') )
+                    ? 'http://localhost:8080/api/auth/google'
+                    : 'https://yoururl.com/api/auth/google';
+
+
+        function onSignIn(googleUser) {
+
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+            var id_token = googleUser.getAuthResponse().id_token;
+            const data = { id_token };
+
+            fetch( url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify( data )
+            })
+            .then( resp => resp.json() )
+            .then( data => console.log( 'my server', data ) )
+            .catch( console.log );
+            
+        }
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+            console.log('User signed out.');
+            });
+        }
+    </script>
+
 </body>
 </html>

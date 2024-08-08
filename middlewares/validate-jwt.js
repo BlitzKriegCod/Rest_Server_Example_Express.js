@@ -3,7 +3,7 @@ const User = require('../models/user.model');
 
 module.exports.ValidateJWT = async (req, res, next) => {
     let tk = req.header('Authorization');
-    console.log(req.headers);
+   
 
     if (!tk) {
         return res.status(401).json({
@@ -23,7 +23,7 @@ module.exports.ValidateJWT = async (req, res, next) => {
         }
 
         req.user = user;
-        console.log(tk);
+        
         next();
     } catch (error) {
         return res.status(401).json({
