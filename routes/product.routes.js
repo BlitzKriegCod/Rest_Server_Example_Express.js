@@ -8,8 +8,9 @@ const { createProduct,
         obtProduct,
         updateProduct, 
         deleteProduct } = require('../controllers/product.controller');
+        const { isAdmin } = require("../middlewares/validate-role");
 
-const { existeCategoriaPorId, existeProductoPorId } = require('../helpers/db-validators');
+
 const { genericValidator } = require('../middlewares/validators');
 const Product = require("../models/categories.model")
 
@@ -41,7 +42,7 @@ router.post('/', [
     ValidateJWT,
     check('name','Name is required').not().isEmpty(),
     check('category','Id Must be a MongoId').isMongoId(),
-        ,
+        
     genericValidator
 ], createProduct );
 
@@ -81,7 +82,7 @@ router.delete('/:id',[
        }
 
 }),
-    genericValidator,
+    genericValidator
 ], deleteProduct);
 
 

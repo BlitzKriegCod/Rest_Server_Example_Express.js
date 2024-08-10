@@ -2,11 +2,11 @@ const {
     Router
 } = require('express')
 const {
-    check,validationResult
+    check
 } = require('express-validator')
 const {ValidateJWT} = require('../middlewares/validate-jwt')
 const {genericValidator} = require('../middlewares/validators')
-const {getCategories,getCategoriesById,createCatg, deleteCatg} = require('../controllers/categories.controller.js')
+const {getCategories,getCategoriesById,createCatg, deleteCatg,updateCatg} = require('../controllers/categories.controller.js')
 
 const categoriesModel = require('../models/categories.model')
 const { isAdmin } = require('../middlewares/validate-role.js')
@@ -22,7 +22,7 @@ router.post('/',[ValidateJWT,isAdmin,check('name','Cat_Name is required').not().
  
     if(catg !== null){
         return res.status(400).json({
-            msg:'Categorie already exist'
+            msg:'Category already exist'
         })
       
     }
@@ -31,9 +31,13 @@ router.post('/',[ValidateJWT,isAdmin,check('name','Cat_Name is required').not().
 
 
 router.put('/:id',[ValidateJWT,isAdmin,check('id','Id Must be a mongoId and is required').isMongoId().not().isEmpty(),
-    ,genericValidator
+    genericValidator
 ] ,updateCatg)
+
+
+
+
 router.delete('/:id',[ValidateJWT,isAdmin,check('id','Id Must be a mongoId and is required').isMongoId().not().isEmpty(),
-    ,genericValidator
+    genericValidator
 ] ,deleteCatg)
 module.exports = router

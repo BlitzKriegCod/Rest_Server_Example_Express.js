@@ -5,11 +5,11 @@ const Product = require('../models/product.model');
 const obtProducts = async(req, res = response ) => {
 
     const { limit = 5, to = 0 } = req.query;
-    const query = { estado: true };
+
 
     const [ total, products ] = await Promise.all([
-        Product.countDocuments(query),
-        Product.find(query)
+        Product.countDocuments(),
+        Product.find()
             .populate('user', 'name')
             .populate('category', 'name')
             .skip( Number( to ) )
@@ -37,11 +37,11 @@ const createProduct = async(req, res = response ) => {
 
     const {user, ...body } = req.body;
 
-    const productDB = await Product.findOne({ name: body.nombre });
+    const productDB = await Product.findOne({ name: body.name });
 
     if ( productDB ) {
         return res.status(400).json({
-            msg: `The product ${ productDB.nombre }, already exist`
+            msg: `The product ${ productDB.name }, already exist`
         });
     }
 
