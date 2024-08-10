@@ -41,3 +41,10 @@ module.exports.verifyIdUser = async (id) => {
   if (!isRegistredUser) throw new Error(`Id: ${id} are not registred`);
 };
 
+module.exports.genericValidator = (req, res, next)=>{
+            const err = validationResult(req);
+            if(!err.isEmpty()){
+               return res.status(400).json(err)
+            }
+            next()
+        }

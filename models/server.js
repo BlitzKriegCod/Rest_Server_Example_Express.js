@@ -4,6 +4,7 @@ const DB =require('../database/config')
 class Server {
     userPath ='/api/users'
     authPath = '/api/auth'
+    categoriesPath = '/api/categories'
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
@@ -19,7 +20,7 @@ class Server {
   routes() {
   this.app.use(this.userPath,require('../routes/user.routes'))
   this.app.use(this.authPath,require('../routes/auth.routes'))
-  
+  this.app.use(this.categoriesPath,require('../routes/categ.routes.js'))
   }
   listen() {
     this.app.listen(this.port, () => console.log(`App listening on port ${this.port}!`.yellow));
